@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Window Size</title>
+    <style>
+      .tag {
+        display: inline-block;
+        background-color: thistle;
+        padding: 16px;
+        margin-top: 16px;
+        font-size: 48px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="tag">Window Size</div>
+    <script>
+      const tag = document.querySelector(".tag");
+      function updateTag() {
+        tag.innerHTML = `
+      window.screen: ${window.screen.width}, ${window.screen.height} <br/>
+      window.outer: ${window.outerWidth}, ${window.outerHeight} <br/>
+      window.inner: ${window.innerWidth}, ${window.innerHeight} <br/>
+      documentElement.clinetWidth: ${document.documentElement.clientWidth}, ${document.documentElement.clientHeight}
+      `;
+      }
+      window.addEventListener("resize", () => {
+        updateTag();
+      });
+      updateTag(); /*이게 없으면 resize가 없기 때문에 그냥 Window Size만 나옴
+      그래서 첨부터 보이게 하려고 이 메소드 사용하는거임 바로*/
+    </script>
+  </body>
+</html>

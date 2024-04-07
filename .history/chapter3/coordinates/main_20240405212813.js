@@ -18,3 +18,13 @@ document.addEventListener("mousemove", (e) => {
   tag.style.top = `${y}px`;
   tag.innerHTML = `${x} ${y}`;
 });
+
+function heogeon(name, move) {
+  () => {
+    move(name);
+  };
+}
+
+heogeon("hand", (el) => {
+  console.log(el);
+});

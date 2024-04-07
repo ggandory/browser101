@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="test.js" defer>
+      //defer먼저 호출해버림 다른것보다
+    </script>
+  </head>
+  <body>
+    <script>
+      //onnlt document문서만 다 다운되면 호출됨(html만 준비되면)
+      // window.addEventListener("DOMContentLoaded", () => {
+      //   console.log("DOMContentLoaded");
+      // });
+      // //after resources (css,images등등 모든 리소스) css나 이미지.. 다운 다 되면 이벤트 호출
+      // window.addEventListener("load", () => {
+      //   console.log("load");
+      // });
+      //여기 질문 beforeunload는 unload호출 되기 전에 더 전에 호출되는거임?
+      //before unload때 호출
+      window.addEventListener("beforeunload", () => {
+        console.log("beforeunload");
+      });
+      //resource is being unloaded일때 호출 즉 로드 아직 안되었을 때 호출
+      // window.addEventListener("unload", () => {
+      //   console.log("unload");
+      // });
+    </script>
+  </body>
+</html>

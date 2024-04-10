@@ -56,14 +56,6 @@
       //원하는 공간에 넣어주고 싶으면
       const h2 = document.querySelector("h2");
       section.insertBefore(h2, h3);
-
-      //innerHTML을 이용하면 다른 태그로 변경 가능하다.
-      section.innerHTML = `
-      <img src="img/avatar.png" alt="avatar" />
-      <h1 id="brand">Dream Coding</h1>
-      `;
-      //변수에 들어있는 태그를 삭제
-      section.removeChild(h2);
     </script>
   </body>
 </html>

@@ -48,7 +48,6 @@ function createItem(text) {
 
   itemRow.appendChild(item);
   itemRow.appendChild(itemDivider);
-  //이거는 왜 리턴함
   return itemRow;
 }
 //버튼을 눌러서 추가를 한다.

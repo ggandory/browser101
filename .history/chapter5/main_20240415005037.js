@@ -42,20 +42,19 @@ function createItem(text) {
 
   const itemDivider = document.createElement("div");
   itemDivider.setAttribute("class", "item_divider");
-  //여기는 왜 appendChild를 하는거지? 위에 이미 있는데?createElement는 그냥 노드만 만는건가?
+  //여기는 왜 appendChild를 하는거지? 위에 이미 있는데?
   item.appendChild(name);
   item.appendChild(deleteBtn);
 
   itemRow.appendChild(item);
   itemRow.appendChild(itemDivider);
-  //이거는 왜 리턴함
   return itemRow;
 }
-//버튼을 눌러서 추가를 한다.
+
 addBtn.addEventListener("click", () => {
   onAdd();
 });
-//엔터를 눌러서 추가를 한다.
+
 input.addEventListener("keypress", (event) => {
   if (event.key === "Enter") {
     onAdd();

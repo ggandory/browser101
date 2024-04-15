@@ -44,7 +44,6 @@ function createItem(text) {
   const itemDivider = document.createElement("div");
   itemDivider.setAttribute("class", "item_divider");
   //여기서 name이후로 appendChild를 하는거지? 위에 이미 있는데?createElement는 그냥 노드만 만는건가?
-  //itemRow는 왜 appendChild안하는거지? 그리고 item은 왜 deleteBtn아래에서 하는거임?
   item.appendChild(name);
   item.appendChild(deleteBtn);
 

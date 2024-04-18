@@ -27,21 +27,14 @@
     <div></div>
     <div></div>
     <script>
-      document.addEventListener(
-        "wheel",
-        (event) => {
-          console.log("scrolling");
-          //스크롤링이벤트에 밑에걸 걸어도 브라우저의 활동자체를 막을 수는 없음
-          event.preventDefault();
-        },
-        { passiv: false }
-      ); //active가 되어버림 즉 스크롤링은 안됨 대신 오류는 안뜸
-      //기본이 passive가 true로 잡혀있음 이건
-      const checkbox = document.querySelector("input");
-      checkbox.addEventListener("click", (event) => {
+      document.addEventListener('wheel', event => {
+        console.log('scrolling');
+        event.preventDefault();
+      });
+      const checkbox = document.querySelector('input');
+      checkbox.addEventListener('click', event => {
         // long
-        console.log("checked");
-        //브라우저에서 동작하는걸 취소해버림
+        console.log('checked');
         event.preventDefault();
       });
     </script>

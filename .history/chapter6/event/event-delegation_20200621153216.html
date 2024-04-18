@@ -32,11 +32,11 @@
       //   });
       // });
 
-      // Coooooooool 🙌 부모한테 타겟잡고 이벤트리스너 만들어버리는게 좋은 코드(버블링)
-      const ul = document.querySelector("ul");
-      ul.addEventListener("click", (event) => {
-        if (event.target.tagName == "LI") {
-          event.target.classList.add("selected");
+      // Coooooooool 🙌
+      const ul = document.querySelector('ul');
+      ul.addEventListener('click', event => {
+        if (event.target.tagName == 'LI') {
+          event.target.classList.add('selected');
         }
       });
     </script>

@@ -28,9 +28,8 @@ let id = 0; //UUID
 function createItem(text) {
   const itemRow = document.createElement("li");
   itemRow.setAttribute("class", "item_row");
-  itemRow.setAttribute("data-id", id);
   itemRow.innerHTML = `
-      <div class="item">
+      <div class="item" data-id=${id}>
       <span class="item_name">${text}</span>
       <button class="item_delete">
       <i class="fa-solid fa-trash" data-id=${id}></i>
@@ -52,10 +51,8 @@ input.addEventListener("keypress", (event) => {
   }
 });
 
-items.addEventListener("click", (event) => {
-  const id = event.target.dataset.id;
-  if (id) {
-    const toBeDeleted = document.querySelector(`.item_row[data-id="${id}"]`);
-    toBeDeleted.remove();
+items.addEventListener("clcick", (event) => {
+  if (event.target.dataset.id) {
+    console.log("he");
   }
 });

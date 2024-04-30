@@ -1,0 +1,172 @@
+개념 정리
+
+프로미스(promise)는 자바스크립트에서 비동기 코드를 처리하기 위한 핵심 메커니즘이다. 프로미스는 많은 자바스크립트 라이브러리와 프레임워크에서 작업 결과를 관리하는 데 사용된다. fetch() API가 프로미스의 한 예다. 개발자에 따라서는 기존 제품을 벗어나 프로미스를 만들고 사용하는 데 익숙하지 않을 수 있지만, 생각보다 간단하다. 프로미스를 만드는 방법을 익히면 라이브러리에서 프로미스가 어떻게 사용되는지 이해하는 데 도움이 된다. 또한 강력한 비동기 프로그래밍 메커니즘을 활용할 수 있다.
+
+프로미스를 사용한 비동기 프로그래밍
+다음 예제에서는 Promise를 사용해서 네트워크 작업의 결과를 처리한다. 네트워크 호출 대신 타임아웃을 사용한다.
+
+function fetchData() {
+return new Promise((resolve, reject) => {
+setTimeout(() => {
+const data = "This is the fetched data!";
+resolve(data);
+}, 2000);
+});
+}
+
+const promise = fetchData();
+
+promise.then((data) => {
+console.log("This will print second:", data);
+});
+
+console.log("This will print first.");
+
+코드에서 Promise를 반환하는 fetchData() 함수를 정의하고, 메서드를 호출하고 promise 변수에 Promise를 저장한다. 그런 다음 Promise.then() 메서드를 사용해 결과를 처리한다.
+
+이 예제의 핵심은 fetchData() 호출이 코드 흐름에서 즉시 발생한다는 점이다. 반면 then()으로 전달된 콜백은 비동기 작업이 완료된 후에 발생한다.
+
+fetchData()가 Promise 객체를 정의하고 이 객체가 resolve와 reject, 두 개의 인수가 있는 함수를 받는 것을 볼 수 있다. Promise가 성공하면 resolve를 호출하고 문제가 있으면 reject를 호출한다. 예제에서는 resolve를 호출하고 문자열을 반환해서 네트워크 호출의 결과를 시뮬레이션한다.
+
+다음과 같이 Promise가 호출돼 직접 처리되는 경우가 많다.
+
+fetchData().then((data) => {
+console.log("This will print second:", data);
+});
+
+이제 오류에 대해 알아보자. 예제에서 다음과 같이 오류 조건을 시뮬레이션할 수 있다.
+
+function fetchData() {
+return new Promise((resolve, reject) => {
+setTimeout(() => {
+if (Math.random() < 0.5) {
+reject("An error occurred while fetching data!");
+} else {
+const data = "This is the fetched data!";
+resolve(data);
+}
+}, 2000);
+});
+}
+
+이 코드의 프로미스는 대략 절반 정도는 reject()를 호출하면서 오류가 발생한다. 실제 애플리케이션에서 네트워크 호출이 실패하거나 서버가 오류를 반환하는 경우 발생할 수 있는 상황이다. fetchData() 호출 시의 실패 가능성에 대처하기 위해 다음과 같이 catch()를 사용한다.
+
+fetchData().then((data) => {
+console.log("That was a good one:", data);
+}).catch((error) => {
+console.log("That was an error:", error)
+});
+
+이 코드를 여러 번 실행하면 어느 때는 오류가 발생하고 어느 때는 성공할 것이다. 대체로 이 방법은 비동기 동작을 설명한 다음 소비하는 간단한 방법이다.
+
+자바스크립트의 프로미스 체인
+프로미스의 대표적인 이점은 체인으로 연결할 수 있다는 것이다. 이렇게 하면 깊이 중첩된 콜백을 피하고 중첩된 비동기 오류 처리를 간소화하는 데 도움이 된다. (여기서 옛날 방식의, 인수-콜백이 있는 자바스크립트 함수를 보여줘서 시끄럽게 만들지는 않겠다. 난장판이 될 것이 뻔하다.)
+
+fetchData() 함수를 그대로 둔 채 processData() 함수를 추가한다. processData() 함수는 fetchData()의 결과에 의존한다. 이제 fetchData()의 반환 호출 내에 처리 로직을 래핑할 수 있지만, 프로미스를 사용하면 다음과 같이 훨씬 더 깔끔하게 가능하다.
+
+function processData(data) {
+return new Promise((resolve, reject) => {
+setTimeout(() => {
+const processedData = data + " - Processed";
+resolve(processedData);
+}, 1000);
+});
+}
+
+fetchData()
+.then((data) => {
+console.log("Fetched data:", data);
+return processData(data);
+})
+.then((processedData) => {
+console.log("Processed data:", processedData);
+})
+.catch((error) => {
+console.error("Error:", error);
+});
+
+이 코드를 여러 번 실행하면 fetchData()가 성공할 때 두 then() 메서드가 모두 올바르게 호출됨을 볼 수 있을 것이다. fetchData()가 실패하는 경우 전체 체인이 단절되고 최종 catch()가 호출된다. try/catch 블록의 작동 방식과 비슷하다.
+
+catch()를 첫 번째 then() 뒤에 둔다면 fetchData() 오류만 처리할 것이다. 여기서 catch()는 fetchData()와 processData() 오류를 모두 처리한다.
+
+핵심은 fetchData()의 then() 핸들러가 processData(data)의 프로미스를 반환한다는 것이다. 이를 통해 체인으로 연결할 수 있게 된다.
+
+무조건 실행 : Promise.finally()
+try/catch가 finally()를 제공하듯이 Promise.finally()는 프로미스 체인에서 무슨 일이 발생하든 상관없이 실행된다.
+
+fetchData()
+.then((data) => {
+console.log("Fetched data:", data);
+return processData(data);
+})
+.then((processedData) => {
+console.log("Processed data:", processedData);
+})
+.catch((error) => {
+console.error("Error:", error);
+})
+.finally(() => {
+console.log("Cleaning up.");
+})
+
+finally()는 어떤 상황에서도 해야 할 일이 있는 경우 유용하다(예를 들어 연결 닫기).
+
+빠른 실패 : Promise.all()
+이제 여러 호출을 동시에 해야 하는 상황을 생각해보자. 예를 들어 2개의 네트워크 호출을 해야 하고, 둘 모두의 결과가 필요한 경우가 있다. 둘 중 하나라도 실패하면 전체 작업이 실패하도록 하고자 한다. 위의 체인 방법도 가능할 수 있지만 하나의 요청이 끝나야 다음 요청을 시작할 수 있으므로 이 상황에는 이상적이지 않다. 그 대신 Promise.all()을 사용할 수 있다.
+
+Promise.all([fetchData(), fetchOtherData()])
+.then((data) => { // data is an array
+console.log("Fetched all data:", data);
+})
+.catch((error) => {
+console.error("An error occurred with Promise.all:", error);
+});
+
+자바스크립트는 싱글 스레드이므로 이런 작업은 진정한 의미의 동시 작업은 아니지만, 동시성에 훨씬 더 가까워진다. 특히 자바스크립트 엔진은 하나의 요청을 시작하고, 이 요청이 아직 처리되는 사이에 다른 요청을 시작할 수 있다. 자바스크립트에서 병렬 실행에 최대한 근접할 수 있는 방법이다.
+
+Promise.all()에 전달된 프로미스 중 하나라도 실패하면 전체 실행이 중단되며 제공된 catch()로 이동한다. Promise.all()은 이런 방식으로 "빠르게 실패"한다.
+
+finally()를 Promise.all()과 함께 사용할 수도 있다. 이는 프로미스 집합이 어떤 식으로 진행되든 관계없이 실행되면서 예상대로 작동한다.
+
+then() 메서드에서는 배열을 받게 된다. 각 요소는 전달된 프로미스에 해당한다.
+
+Promise.all([fetchData(), fetchData2()])
+.then((data) => {
+console.log("FetchData() = " + data[0] + " fetchMoreData() = " + data[1] );
+})
+
+가장 빠른 것이 승리 : Promise.race()
+여러 비동기 작업이 있는데 그 중에서 첫 번째 작업만 성공하면 되는 경우가 있다. 중복되는 두 개의 서비스 중에서 더 빠른 서비스를 사용하고자 하는 경우가 여기에 해당한다.
+
+예를 들어 fetchData()와 fetchSameData()가 동일한 정보를 요청하는 2가지 방법이고, 둘 다 프로미스를 반환한다고 가정해 보자. race()를 사용해서 이를 관리하는 방법은 다음과 같다.
+
+Promise.race([fetchData(), fetchSameData()])
+.then((data) => {
+console.log("First data received:", data);
+});
+
+여기서 then() 콜백은 데이터에 대해 하나의 값, 즉 승리하는(가장 빠른) Promise의 반환 값만 받는다.
+
+race()에서는 오류가 약간 복잡하다. 거부된 Promise가 먼저 발생하는 경우 전체 경주가 끝나고 catch()가 호출된다. 거부된 프로미스가 다른 프로미스가 해결된 후에 발생한다면 오류는 무시된다.
+
+문제를 하나 낸다. 오류가 무시되고 첫 번째 성공한 작업만 승리하도록 Promise.race()를 구성하려면 어떻게 해야 할까?
+
+전부 또는 전무 : Promise.allSettled()
+성공하든 실패하든 비동기 작업 모음이 모두 완료될 때까지 기다리려면 allSettled()를 사용하면 된다. 예를 들면 다음과 같다.
+
+Promise.allSettled([fetchData(), fetchMoreData()]).then((results) =>
+results.forEach((result) => console.log(result.status)),
+);
+
+then() 핸들러로 전달된 results인수에는 다음과 같이 작업의 결과를 기술하는 배열이 저장된다.
+
+[0: {status: 'fulfilled', value: "This is the fetched data!"},
+1: {status: 'rejected', reason: undefined}]
+
+따라서 상태 필드는 fulfilled 또는 rejected가 된다. fulfilled(해결됨)인 경우 값에는 resolve()에 의해 호출된 인수가 저장된다. 거부된 프로미스는 reason 필드에 오류 원인을 넣는다(제공된 경우).
+
+예고 : Promise.withResolvers()
+ECMAScript 2024 사양에는 withResolvers()라는, Promise에 대한 정적 메서드가 포함된다. 대부분의 브라우저와 서버 측 환경은 이미 이를 지원한다. 다소 난해하지만 모질라에서 좋은 사용법 예제를 볼 수 있다. 새로운 메서드를 사용하면 resolve와 reject 함수를 동일한 범위에 유지하면서 독립 변수로 Promise와 함께 선언할 수 있다.
+
+결론
+프로미스는 자바스크립트의 중요하면서 유용한 부분이다. 다양한 비동기 프로그래밍 상황에 맞는 툴을 제공하며, 써드 파티 프레임워크와 라이브러리를 사용할 때 항상 등장한다. 이 글에서 다룬 요소는 모두 고수준 구성요소이므로 간단히 이해할 수 있는 API다.

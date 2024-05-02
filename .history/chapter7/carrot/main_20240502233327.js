@@ -27,7 +27,6 @@ function startGame() {
   initGame();
   showStopButton();
   showTimerAndScore();
-  startGameTimer();
 }
 function stopGame() {}
 
@@ -44,9 +43,6 @@ function showTimerAndScore() {
 
 function initGame() {
   //벌레와 당근을 생성한뒤 field에 추가해준다.
-
-  field.innerHTML = "";
-  gameScore.innerText = CARROT_COUNT;
   addItem("carrot", CARROT_COUNT, "img/carrot.png");
   addItem("monster", MONSTER_COUNT, "img/monster.png");
   addItem("bug", BUG_COUNT, "img/bug.png");

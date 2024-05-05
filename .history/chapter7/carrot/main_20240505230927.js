@@ -12,10 +12,6 @@ const gameBtn = document.querySelector(".game_button");
 const gameTimer = document.querySelector(".game_timer");
 const gameScore = document.querySelector(".game_score");
 
-const popUp = document.querySelector(".pop-up");
-const popUpText = document.querySelector(".pop-up_message");
-const popUpRefresh = document.querySelector(".pop-up_refresh");
-
 let started = false;
 let score = 0;
 let timer = undefined;
@@ -35,11 +31,7 @@ function startGame() {
   showTimerAndScore();
   startGameTimer();
 }
-function stopGame() {
-  stopGameTimer();
-  hideGameButton();
-  showPopUpWithText("REPLAY?");
-}
+function stopGame() {}
 
 function showStopButton() {
   const icon = gameBtn.querySelector(".fa-play");
@@ -47,16 +39,11 @@ function showStopButton() {
   icon.classList.remove("fa-play");
 }
 
-function hideGameButton() {
-  gameBtn.style.visibility = "hidden";
-}
-
 function showTimerAndScore() {
   gameTimer.style.visibility = "visible";
   gameScore.style.visibility = "visible";
 }
 
-//이 함수 이해가 잘 안감
 function startGameTimer() {
   let remainingTimeSec = GAME_DURATION_SEC;
   updateTimerText(remainingTimeSec);
@@ -69,19 +56,10 @@ function startGameTimer() {
   }, 1000);
 }
 
-function stopGameTimer() {
-  clearInterval(timer);
-}
-
-function updateTimerText(time) {
+function updateTimerText(sec) {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
   gameTimer.innerHTML = `${minutes}:${seconds}`;
-}
-
-function showPopUpWithText(text) {
-  popUpText.innerHTML = text;
-  popUp.classList.remove("pop-up-hide");
 }
 
 function initGame() {

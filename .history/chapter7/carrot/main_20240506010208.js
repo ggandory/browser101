@@ -1,10 +1,10 @@
 "use strict";
 
 const CARROT_SIZE = 80;
-const CARROT_COUNT = 10;
-const BUG_COUNT = 10;
-const MONSTER_COUNT = 10;
-const GAME_DURATION_SEC = 10;
+const CARROT_COUNT = 5;
+const BUG_COUNT = 5;
+const MONSTER_COUNT = 5;
+const GAME_DURATION_SEC = 5;
 
 const field = document.querySelector(".game_field");
 const fieldRect = field.getBoundingClientRect();
@@ -57,7 +57,6 @@ function stopGame() {
   stopGameTimer();
   hideGameButton();
   showPopUpWithText("REPLAY?");
-  playSound(alertSound);
   stopSound(bgSound);
 }
 function finishGame(win) {
@@ -69,7 +68,6 @@ function finishGame(win) {
   } else {
     playSound(bugSound);
   }
-  stopSound(bgSound);
   showPopUpWithText(win ? "YOU WON!" : "YOU LOST :(");
   initGame(); // 게임 종료 후 필드 초기화
 }
@@ -78,7 +76,6 @@ function showStopButton() {
   const icon = gameBtn.querySelector(".fa-solid");
   icon.classList.add("fa-stop");
   icon.classList.remove("fa-play");
-  gameBtn.style.visibility = "visible";
 }
 
 function hideGameButton() {
@@ -156,7 +153,6 @@ function onFieldClick(event) {
 }
 
 function playSound(sound) {
-  sound.currentTime = 0;
   sound.play();
 }
 

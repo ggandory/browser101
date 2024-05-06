@@ -50,10 +50,6 @@ export default class Field {
       target.remove();
       sound.playBug();
       this.onItemClick && this.onItemClick("bug");
-    } else if (target.matches(".monster")) {
-      target.remove();
-      sound.playBug(); // 이 부분에서 임시로 playBug() 함수를 호출하도록 설정했습니다. 실제로는 playMonster() 등의 함수를 사용하셔야 합니다.
-      this.onItemClick && this.onItemClick("monster");
     }
   }
 }

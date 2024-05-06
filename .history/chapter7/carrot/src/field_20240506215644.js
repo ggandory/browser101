@@ -1,5 +1,6 @@
 "use strict";
 import * as sound from "./sound.js";
+const carrotSound = new Audio("./sound/carrot_pull.mp3");
 const CARROT_SIZE = 80;
 
 export default class Field {
@@ -13,7 +14,7 @@ export default class Field {
     this.field.addEventListener("click", this.onClick);
   }
   init() {
-    this.field.innerHTML = ""; // 필드 초기화
+    field.innerHTML = ""; // 필드 초기화
     this._addItem("monster", this.monsterCount, "img/monster.png");
     this._addItem("bug", this.bugCount, "img/bug.png");
     this._addItem("carrot", this.carrotCount, "img/carrot.png");
@@ -46,14 +47,8 @@ export default class Field {
       target.remove();
       sound.playCarrot();
       this.onItemClick && this.onItemClick("carrot");
-    } else if (target.matches(".bug")) {
-      target.remove();
-      sound.playBug();
-      this.onItemClick && this.onItemClick("bug");
-    } else if (target.matches(".monster")) {
-      target.remove();
-      sound.playBug(); // 이 부분에서 임시로 playBug() 함수를 호출하도록 설정했습니다. 실제로는 playMonster() 등의 함수를 사용하셔야 합니다.
-      this.onItemClick && this.onItemClick("monster");
+    } else if (target.matches(".bug") || target.matches(".monster")) {
+      this.onItemClick && this.onItemClick("bug", "monster");
     }
   }
 }

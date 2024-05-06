@@ -9,7 +9,7 @@ export default class Field {
     this.monsterCount = monsterCount;
     this.field = document.querySelector(".game_field");
     this.fieldRect = this.field.getBoundingClientRect();
-    this.onClick = this.onClick.bind(this);
+    //this.onClick = this.onClick.bind(this);
     this.field.addEventListener("click", this.onClick);
   }
   init() {
@@ -40,7 +40,7 @@ export default class Field {
       this.field.appendChild(item);
     }
   }
-  onClick(event) {
+  onClick = (event) => {
     const target = event.target;
     if (target.matches(".carrot")) {
       target.remove();
@@ -55,7 +55,7 @@ export default class Field {
       sound.playBug(); // 이 부분에서 임시로 playBug() 함수를 호출하도록 설정했습니다. 실제로는 playMonster() 등의 함수를 사용하셔야 합니다.
       this.onItemClick && this.onItemClick("monster");
     }
-  }
+  };
 }
 
 function randomNumber(min, max) {

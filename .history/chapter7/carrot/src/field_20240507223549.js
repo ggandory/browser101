@@ -9,7 +9,7 @@ export default class Field {
     this.monsterCount = monsterCount;
     this.field = document.querySelector(".game_field");
     this.fieldRect = this.field.getBoundingClientRect();
-    //this.onClick = this.onClick.bind(this);  이걸 쓰거나 this바인딩 처리할 때 밑에꺼처럼 애로우 펑션처리한다 이벤트로
+    //this.onClick = this.onClick.bind(this);
     this.field.addEventListener("click", (event) => this.onClick(event));
   }
   init() {
@@ -40,7 +40,6 @@ export default class Field {
       this.field.appendChild(item);
     }
   }
-  //onClick = event =>{}이렇게 처리해도 됨
   onClick(event) {
     const target = event.target;
     if (target.matches(".carrot")) {

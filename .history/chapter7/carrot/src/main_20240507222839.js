@@ -25,7 +25,7 @@ gameFinishBanner.setClickListener(() => {
 });
 
 const gameField = new Field(CARROT_COUNT, BUG_COUNT, MONSTER_COUNT);
-gameField.setClickListener(onItemClick);
+gameField.setClickListener((item) => onItemClick);
 
 function onItemClick(item) {
   if (!started) {
@@ -76,12 +76,13 @@ function finishGame(win) {
   hideGameButton();
   if (win) {
     sound.playsWin();
+    gameFinishBanner.showWithText("YOU WON!");
   } else {
     sound.playBug();
+    gameFinishBanner.showWithText("YOU LOST :(");
   }
   sound.stopBackground();
-  gameFinishBanner.showWithText(win ? "YOU WON!" : "YOU LOST :(");
-  initGame();
+  initGame(); // 승리일 때만 필드 초기화
 }
 
 function showStopButton() {

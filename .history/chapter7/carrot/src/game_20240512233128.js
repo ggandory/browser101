@@ -1,7 +1,7 @@
 import * as sound from "./sound.js";
 import Field from "./field.js";
 
-//Builder Pattern 조금 어려움 이건
+//Builder Pattern
 export default class GameBuilder {
   gameDuration(duration) {
     this.gameDuration = duration;

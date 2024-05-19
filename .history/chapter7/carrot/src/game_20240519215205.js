@@ -1,5 +1,5 @@
 import * as sound from "./sound.js";
-import { Field, ItemType } from "./field.js";
+import Field from "./field.js";
 
 export const Reason = Object.freeze({
   win: "win",
@@ -8,7 +8,7 @@ export const Reason = Object.freeze({
 });
 
 //Builder Pattern 조금 어려움 이건
-export class GameBuilder {
+export default class GameBuilder {
   gameDuration(duration) {
     this.gameDuration = duration;
     return this;
@@ -48,7 +48,7 @@ class Game {
 
     this.gameBtn.addEventListener("click", () => {
       if (this.started) {
-        this.stop(Reason.cancel);
+        this.stop();
       } else {
         this.start();
       }
@@ -74,27 +74,41 @@ class Game {
     this.startGameTimer();
     sound.playBackground();
   }
-  stop(reason) {
+  stop() {
     this.started = false;
     this.stopGameTimer();
     this.hideGameButton();
+    sound.playAlert();
     sound.stopBackground();
-    this.onGameStop && this.onGameStop(reason);
+    this.onGameStop && this.onGameStop("cancel");
+  }
+
+  finish(win) {
+    this.started = false;
+    this.hideGameButton();
+    if (win) {
+      sound.playsWin();
+    } else {
+      sound.playBug();
+    }
+    this.stopGameTimer(); // 게임 종료 시 타이머 중지
+    sound.stopBackground();
+    this.onGameStop && this.onGameStop(win ? "win" : "lose");
   }
 
   onItemClick = (item) => {
     if (!this.started) {
       return;
     }
-    if (item === ItemType.carrot) {
+    if (item === "carrot") {
       this.score++;
       this.updateScoreBoard();
       if (this.score === this.carrotCount) {
-        this.stop(Reason.win);
+        this.finish(true);
       }
-    } else if (item === ItemType.bug || item === ItemType.monster) {
+    } else if (item === "bug" || item === "monster") {
       this.stopGameTimer();
-      this.stop(Reason.lose);
+      this.finish(false);
     }
   };
 
@@ -122,7 +136,7 @@ class Game {
       if (remainingTimeSec <= 0) {
         clearInterval(this.timer);
 
-        this.stop(this.carrotCount === this.score ? Reason.win : Reason.lose);
+        this.finish(this.carrotCount === this.score);
         return;
       }
       this.updateTimerText(--remainingTimeSec);

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My First Game</title>
+    <link rel="stylesheet" href="style.css" />
+    <script type="module" src="src/main.js" defer></script>
+    <script
+      src="https://kit.fontawesome.com/9eb162ac0d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <section class="game">
+      <header class="game_header">
+        <button class="game_button">
+          <i class="fa-solid fa-play"></i>
+        </button>
+        <span class="game_timer">0:0</span>
+        <span class="game_score">9</span>
+      </header>
+      <section class="game_field"></section>
+    </section>
+    <section class="pop-up pop-up-hide">
+      <button class="pop-up_refresh">
+        <i class="fa-solid fa-rotate-right"></i>
+      </button>
+      <span class="pop-up_message">hello</span>
+    </section>
+
+    <div class="tabWrap" id="tabPrdDiscloureWrap">
+      <ul class="tabStyle">
+        <li class="tMenu selected" data-tab="D">
+          <a href="#nohref" class="tabMenu">d</a>
+        </li>
+        <li class="tMenu" data-tab="E">
+          <a href="#nohref" class="tabMenu">e</a>
+        </li>
+        <li class="tMenu" data-tab="F">
+          <a href="#nohref" class="tabMenu">f</a>
+        </li>
+      </ul>
+    </div>
+    <div class="tabWrap" id="tabPrdDiscloureWrap">
+      <ul class="tabStyle">
+        <li class="tMenu selected" data-tab="A">
+          <a href="#nohref" class="tabMenu">a</a>
+        </li>
+        <li class="tMenu" data-tab="B">
+          <a href="#nohref" class="tabMenu">b</a>
+        </li>
+        <li class="tMenu" data-tab="C">
+          <a href="#nohref" class="tabMenu">c</a>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>

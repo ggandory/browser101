@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      button {
+        font-size: 60px;
+      }
+
+      button:hover {
+        background-color: aliceblue;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <button>While(true)</button>
+    <script>
+      //call stack안에 있는게 다 끝나고 이벤트 루프가 돌아간다
+      //그래서 끝나지 않는 함수가 있으면 페이지가 멈춰버림(계속 머무르기때문 call stack에)
+      const button = document.querySelector("button");
+      button.addEventListener("click", () => {
+        while (true) {
+          //repeat
+        }
+      });
+    </script>
+  </body>
+</html>
